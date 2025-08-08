@@ -44,7 +44,8 @@ const HeroSection = () => {
             "Crafting solutions that matter—one step at a time."
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-5 sm:mb-6 px-4">
+          {/* Primary action buttons centered */}
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-5 sm:mb-6 px-4">
             <GradientButton 
               className="px-6 sm:px-8 py-2.5 text-sm sm:text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300"
               onClick={() => scrollToSection('projects')}
@@ -60,7 +61,8 @@ const HeroSection = () => {
             </GradientButton>
           </div>
           
-          <div className="flex justify-center space-x-4 sm:space-x-6 mb-10 sm:mb-12">
+          {/* Social buttons centered */}
+          <div className="flex justify-center items-center space-x-4 sm:space-x-6 mb-10 sm:mb-12 transform translate-x-1 sm:translate-x-2">
             <a 
               href="https://github.com/SASAXE" 
               target="_blank" 
@@ -79,13 +81,14 @@ const HeroSection = () => {
             </a>
           </div>
         </div>
-        
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ArrowDown 
-            className="w-5 h-5 sm:w-6 sm:h-6 text-blue-200 cursor-pointer hover:text-white transition-colors"
-            onClick={() => scrollToSection('projects')}
-          />
-        </div>
+      </div>
+
+      {/* Scroll indicator centered to the screen */}
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
+        <ArrowDown 
+          className="w-5 h-5 sm:w-6 sm:h-6 text-blue-200 cursor-pointer hover:text-white transition-colors"
+          onClick={() => scrollToSection('projects')}
+        />
       </div>
     </section>
   );
