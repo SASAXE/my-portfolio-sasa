@@ -9,6 +9,14 @@ interface OptimizedImageProps {
   style?: React.CSSProperties
   sizes?: string
   priority?: boolean
+  /**
+   * When true, renders a WebP <source> before the <img> tag.
+   * Some environments might not host a corresponding .webp asset, which can cause loading failures.
+   * Default: true for backward compatibility.
+   */
+  useWebp?: boolean
+  /** Optional fallback image to render if the primary image fails to load. */
+  fallbackSrc?: string
 }
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
@@ -19,7 +27,9 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   className = '',
   style = {},
   sizes = '100vw',
-  priority = false
+  priority = false,
+  useWebp = true,
+  fallbackSrc
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isInView, setIsInView] = useState(priority)
@@ -83,14 +93,17 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
         />
       )}
 
-      {/* Optimized image with multiple formats */}
+      {/* Optimized image with multiple formats */
+      }
       {(isInView || priority) && !hasError && (
         <picture>
-          {/* WebP format for modern browsers */}
-          <source 
-            srcSet={`${webpSrc} 1x, ${webpSrc.replace('.webp', '@2x.webp')} 2x`}
-            type="image/webp"
-          />
+          {/* WebP format for modern browsers (optional) */}
+          {useWebp && (
+            <source 
+              srcSet={`${webpSrc} 1x, ${webpSrc.replace('.webp', '@2x.webp')} 2x`}
+              type="image/webp"
+            />
+          )}
           
           {/* Fallback for older browsers */}
           <img
@@ -113,9 +126,19 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
       {/* Error fallback */}
       {hasError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-800">
-          <span className="text-gray-500 text-sm">Image failed to load</span>
-        </div>
+        fallbackSrc ? (
+          <img 
+            src={fallbackSrc}
+            alt={alt}
+            width={width}
+            height={height}
+            className={`w-full h-full object-cover ${className}`}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-800">
+            <span className="text-gray-500 text-sm">Image failed to load</span>
+          </div>
+        )
       )}
     </div>
   )

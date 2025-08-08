@@ -17,11 +17,13 @@ const HeroSection = () => {
         <div className="animate-fade-in">
           <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 mx-auto mb-4 sm:mb-6 rounded-full overflow-hidden border-3 border-white/80 shadow-xl backdrop-blur-sm animate-float relative flex-shrink-0">
             <OptimizedImage
-              src="/lovable-uploads/e8845733-aecb-4a5b-9a45-e4c13643b02d.png"
+              src="/images/sasa-avatar.png"
               alt="Sasanka Hemakumara - Professional headshot"
               width={224}
               height={224}
               priority={true}
+              useWebp={false}
+              fallbackSrc="/images/sasa-avatar.png"
               className="hover:scale-105 transition-transform duration-500"
               sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, (max-width: 1024px) 192px, 224px"
             />
@@ -58,7 +60,7 @@ const HeroSection = () => {
             </GradientButton>
           </div>
           
-          <div className="flex justify-center space-x-4 sm:space-x-6 mb-6 sm:mb-8">
+          <div className="flex justify-center space-x-4 sm:space-x-6 mb-10 sm:mb-12">
             <a 
               href="https://github.com/SASAXE" 
               target="_blank" 
@@ -78,7 +80,7 @@ const HeroSection = () => {
           </div>
         </div>
         
-        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ArrowDown 
             className="w-5 h-5 sm:w-6 sm:h-6 text-blue-200 cursor-pointer hover:text-white transition-colors"
             onClick={() => scrollToSection('projects')}
