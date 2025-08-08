@@ -18,8 +18,14 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-blue-400/30 pt-6 sm:pt-8 text-center">
-          <p className="text-blue-100 text-xs sm:text-sm">
-            © {currentYear} Sasanka Hemakumara. All rights reserved.
+          <p className="text-blue-100 text-xs sm:text-sm inline-flex items-center justify-center gap-2">
+            <span>© {currentYear} Sasanka Hemakumara. All rights reserved.</span>
+            <img
+              src="/images/whale.png"
+              alt="Whale icon"
+              className="h-4 w-4 sm:h-5 sm:w-5"
+              loading="lazy"
+            />
           </p>
         </div>
       </div>
