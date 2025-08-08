@@ -196,7 +196,8 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
           bottom: 0,
           zIndex: -10,
           width: '100vw',
-          height: '100vh'
+          height: '100vh',
+          filter: 'brightness(0.7)'
         }}
       />
     </div>

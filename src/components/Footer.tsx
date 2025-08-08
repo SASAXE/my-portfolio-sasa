@@ -19,7 +19,7 @@ const Footer = () => {
         
         <div className="border-t border-blue-400/30 pt-6 sm:pt-8 text-center">
           <p className="text-blue-100 text-xs sm:text-sm">
-            © {currentYear} SasankaHemakumara. All rights reserved.
+            © {currentYear} Sasanka Hemakumara. All rights reserved.
           </p>
         </div>
       </div>
