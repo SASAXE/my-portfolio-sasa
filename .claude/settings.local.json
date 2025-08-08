@@ -6,7 +6,8 @@
       "Bash(find:*)",
       "Bash(npm run lint)",
       "Bash(dir /s)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(npm install:*)"
     ],
     "deny": []
   }

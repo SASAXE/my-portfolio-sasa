@@ -1,0 +1,35 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.css-animated-text {
+  display: inline-block;
+}
+
+.css-word {
+  display: inline-block;
+  margin-right: 0.25em;
+}
+
+.css-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: fadeInUp 500ms forwards;
+  animation-fill-mode: forwards;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .css-letter {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}

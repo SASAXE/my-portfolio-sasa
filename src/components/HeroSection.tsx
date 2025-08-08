@@ -1,7 +1,8 @@
 
 import { GradientButton } from "@/components/ui/gradient-button";
 import { ArrowDown, Github, Linkedin } from "lucide-react";
-import SplitText from "@/components/ui/split-text";
+import CSSAnimatedText from "@/components/ui/css-split-text";
+import OptimizedImage from "@/components/ui/optimized-image";
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
@@ -15,22 +16,23 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
         <div className="animate-fade-in">
           <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 mx-auto mb-4 sm:mb-6 rounded-full overflow-hidden border-3 border-white/80 shadow-xl backdrop-blur-sm animate-float relative flex-shrink-0">
-            <img 
-              src="/lovable-uploads/e8845733-aecb-4a5b-9a45-e4c13643b02d.png" 
+            <OptimizedImage
+              src="/lovable-uploads/e8845733-aecb-4a5b-9a45-e4c13643b02d.png"
               alt="Sasanka Hemakumara - Professional headshot"
-              className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
-              style={{ aspectRatio: '1/1' }}
+              width={224}
+              height={224}
+              priority={true}
+              className="hover:scale-105 transition-transform duration-500"
+              sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, (max-width: 1024px) 192px, 224px"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/5 rounded-full"></div>
           </div>
           
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 text-white tracking-tight leading-tight">
             <div className="font-crimson drop-shadow-2xl">
-              <SplitText 
+              <CSSAnimatedText 
                 text="Sasanka Hemakumara"
                 delay={30}
-                loop={true}
-                loopInterval={2000}
               />
             </div>
           </h1>

@@ -5,29 +5,41 @@ import AboutSection from "@/components/AboutSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import { MatrixBackground } from "@/components/MatrixRain";
+import { Suspense, lazy } from "react";
+
+// Lazy load heavy animation components
+const MatrixBackground = lazy(() => 
+  import("@/components/MatrixRain").then(module => ({ default: module.MatrixBackground }))
+);
+
+// Fallback component while Matrix Rain loads
+const MatrixFallback = () => (
+  <div className="fixed inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-black" />
+);
 
 const Index = () => {
   return (
     <div className="min-h-screen w-full">
-      <MatrixBackground 
-        density={0.9}
-        speed={1.2}
-        colors={['#00ff41', '#00d4aa', '#0099cc', '#66ff66', '#00ffff']}
-      >
-        <div className="relative z-20 min-h-screen w-full flex flex-col">
-          <Navigation />
-          <main className="flex-1">
-            <div id="home">
-              <HeroSection />
-            </div>
-            <ProjectsSection />
-            <AboutSection />
-            <ContactSection />
-          </main>
-          <Footer />
-        </div>
-      </MatrixBackground>
+      <Suspense fallback={<MatrixFallback />}>
+        <MatrixBackground 
+          density={0.9}
+          speed={1.2}
+          colors={['#00ff41', '#00d4aa', '#0099cc', '#66ff66', '#00ffff']}
+        >
+          <div className="relative z-20 min-h-screen w-full flex flex-col">
+            <Navigation />
+            <main className="flex-1">
+              <div id="home">
+                <HeroSection />
+              </div>
+              <ProjectsSection />
+              <AboutSection />
+              <ContactSection />
+            </main>
+            <Footer />
+          </div>
+        </MatrixBackground>
+      </Suspense>
     </div>
   );
 };

@@ -30,8 +30,26 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
   const animationRef = useRef<number | null>(null)
   const dropsRef = useRef<Drop[]>([])
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
-
+  const lastFrameTimeRef = useRef(0)
+  const isVisibleRef = useRef(true)
+  
   const numbers = '0123456789'
+  
+  // Performance settings
+  const targetFPS = 30 // Reduced from 60fps
+  const frameInterval = 1000 / targetFPS
+  const isMobile = dimensions.width < 768
+  const adjustedDensity = isMobile ? density * 0.5 : density // 50% fewer particles on mobile
+
+  // Visibility API to pause animation when tab is not active
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      isVisibleRef.current = !document.hidden
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [])
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -61,7 +79,7 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
 
     const initializeDrops = () => {
       dropsRef.current = []
-      for (let i = 0; i < columns * density; i++) {
+      for (let i = 0; i < columns * adjustedDensity; i++) {
         const column = Math.floor(Math.random() * columns)
         const x = column * columnWidth + Math.random() * (columnWidth - 10)
         
@@ -75,35 +93,41 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
           opacity: Math.random() * 0.5 + 0.3,
           fontSize: Math.random() * 8 + 14,
           color: colors[Math.floor(Math.random() * colors.length)],
-          glow: Math.random() < 0.4
+          glow: false // Removed expensive glow effects
         })
       }
     }
 
     initializeDrops()
 
-    const animate = () => {
-      // Clear with slight trail effect for smoother animation
+    const animate = (currentTime: number) => {
+      // Skip frame if tab is not visible
+      if (!isVisibleRef.current) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
+      }
+
+      // FPS throttling - only render if enough time has passed
+      if (currentTime - lastFrameTimeRef.current < frameInterval) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
+      }
+
+      lastFrameTimeRef.current = currentTime
+
+      // Clear with slight trail effect
       ctx.fillStyle = 'rgba(0, 1, 17, 0.08)'
       ctx.fillRect(0, 0, dimensions.width, dimensions.height)
 
-      dropsRef.current.forEach((drop, index) => {
-        ctx.save()
-        
-        if (drop.glow) {
-          ctx.shadowColor = drop.color
-          ctx.shadowBlur = 15
-        }
-
+      // Batch font setting to reduce context switches
+      ctx.font = '16px "Courier New", monospace'
+      
+      dropsRef.current.forEach((drop) => {
         const fadeDistance = 120
         const fadeStart = dimensions.height - fadeDistance
         let alpha = drop.opacity
 
-        // Add slight brightness variation for depth effect
-        if (drop.y < dimensions.height * 0.3) {
-          alpha *= 0.9 + (drop.y / (dimensions.height * 0.3)) * 0.1
-        }
-
+        // Simplified alpha calculation
         if (drop.y > fadeStart) {
           const fadeProgress = (drop.y - fadeStart) / fadeDistance
           alpha = alpha * (1 - fadeProgress)
@@ -111,14 +135,18 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
 
         ctx.globalAlpha = Math.max(0.1, alpha)
         ctx.fillStyle = drop.color
-        ctx.font = `${drop.fontSize}px 'Courier New', monospace`
-        ctx.fillText(drop.char, drop.x, drop.y)
         
-        ctx.restore()
+        // Only set font size if different (reduced context switches)
+        if (Math.abs(drop.fontSize - 16) > 2) {
+          ctx.font = `${drop.fontSize}px "Courier New", monospace`
+        }
+        
+        ctx.fillText(drop.char, drop.x, drop.y)
 
         drop.y += drop.speed
 
-        if (Math.random() < 0.005) {
+        // Reduced random character changes frequency
+        if (Math.random() < 0.002) {
           drop.char = numbers[Math.floor(Math.random() * numbers.length)]
         }
 
@@ -130,23 +158,26 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
           drop.opacity = Math.random() * 0.5 + 0.3
           drop.fontSize = Math.random() * 8 + 14
           drop.color = colors[Math.floor(Math.random() * colors.length)]
-          drop.glow = Math.random() < 0.4
-          
           drop.char = numbers[Math.floor(Math.random() * numbers.length)]
         }
       })
 
+      // Reset global alpha and font for next frame
+      ctx.globalAlpha = 1
+      ctx.font = '16px "Courier New", monospace'
+
       animationRef.current = requestAnimationFrame(animate)
     }
 
-    animate()
+    // Start animation with initial timestamp
+    animationRef.current = requestAnimationFrame(animate)
 
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [dimensions, density, speed, colors])
+  }, [dimensions, adjustedDensity, speed, colors, frameInterval])
 
   return (
     <div className={`fixed inset-0 w-screen h-screen overflow-hidden pointer-events-none ${className}`} style={{ zIndex: -10 }}>
