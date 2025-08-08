@@ -1,7 +1,7 @@
 
 import type { Config } from "tailwindcss";
-
-const defaultTheme = require('tailwindcss/defaultTheme');
+import { fontFamily } from "tailwindcss/defaultTheme";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -22,7 +22,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				crimson: ['Crimson Text', ...defaultTheme.fontFamily.serif],
+				crimson: ['Crimson Text', ...fontFamily.serif],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -176,5 +176,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindcssAnimate],
 } satisfies Config;

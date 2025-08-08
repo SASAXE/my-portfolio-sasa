@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm audit:*)",
+      "Bash(npm run build:*)",
+      "Bash(find:*)",
+      "Bash(npm run lint)",
+      "Bash(dir /s)",
+      "Bash(powershell:*)"
+    ],
+    "deny": []
+  }
+}

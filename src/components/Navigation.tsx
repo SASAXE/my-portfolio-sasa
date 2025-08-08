@@ -9,7 +9,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > window.innerHeight * 0.8);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -31,16 +31,13 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-slate-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      isScrolled ? 'translate-y-0 bg-slate-900/95 backdrop-blur-md shadow-lg' : '-translate-y-full bg-transparent'
     }`}>
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
-          {/* Empty space where logo was */}
-          <div className="w-8"></div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+        <div className="flex items-center justify-center h-16 relative">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden md:flex items-center justify-center space-x-6 lg:space-x-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -52,9 +49,9 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button - Positioned absolute to the right */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-2 absolute right-0"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X className="w-6 h-6 text-blue-100" /> : <Menu className="w-6 h-6 text-blue-100" />}
