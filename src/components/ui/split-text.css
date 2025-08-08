@@ -1,0 +1,24 @@
+/* Animation for the split text effect */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply the animation to the container */
+.split-text-container {
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* Style for each letter */
+.split-text-container span {
+  display: inline-block;
+  white-space: pre;
+  will-change: transform, opacity;
+}
