@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes pulse-fade {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+.animate-pulse-fade {
+  animation: pulse-fade 4s ease-in-out infinite;
+}
+
 @layer base {
   @property --pos-x {
     syntax: '<percentage>';
