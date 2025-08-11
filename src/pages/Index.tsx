@@ -5,41 +5,30 @@ import AboutSection from "@/components/AboutSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import { Suspense, lazy } from "react";
-
-// Lazy load heavy animation components
-const MatrixBackground = lazy(() => 
-  import("@/components/MatrixRain").then(module => ({ default: module.MatrixBackground }))
-);
-
-// Fallback component while Matrix Rain loads
-const MatrixFallback = () => (
-  <div className="fixed inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-black" />
-);
+import { BeamsBackground } from "@/components/ui/beams-background";
 
 const Index = () => {
   return (
-    <div className="min-h-screen w-full">
-      <Suspense fallback={<MatrixFallback />}>
-        <MatrixBackground 
-          density={0.9}
-          speed={1.2}
-          colors={['#00ff41', '#00d4aa', '#0099cc', '#66ff66', '#00ffff']}
-        >
-          <div className="relative z-20 min-h-screen w-full flex flex-col">
-            <Navigation />
-            <main className="flex-1">
-              <div id="home">
-                <HeroSection />
-              </div>
-              <ProjectsSection />
-              <AboutSection />
-              <ContactSection />
-            </main>
-            <Footer />
+    <div className="relative min-h-screen w-full">
+      <BeamsBackground intensity="medium" className="fixed inset-0 -z-10" />
+      <div className="relative z-10 min-h-screen w-full flex flex-col">
+        <Navigation />
+        <main className="flex-1">
+          <div id="home" className="min-h-screen flex items-center">
+            <HeroSection />
           </div>
-        </MatrixBackground>
-      </Suspense>
+          <div id="projects" className="min-h-screen py-20">
+            <ProjectsSection />
+          </div>
+          <div id="about" className="min-h-screen py-20">
+            <AboutSection />
+          </div>
+          <div id="contact" className="min-h-screen py-20">
+            <ContactSection />
+          </div>
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };

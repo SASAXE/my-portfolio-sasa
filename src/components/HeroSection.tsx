@@ -12,22 +12,23 @@ const HeroSection = () => {
 
   return (
     <section className="h-screen flex items-center justify-center relative overflow-hidden">
-      
-      <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
-        <div className="animate-fade-in">
-          <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 mx-auto mb-4 sm:mb-6 rounded-full overflow-hidden border-3 border-white/80 shadow-xl backdrop-blur-sm animate-float relative flex-shrink-0">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10 flex flex-col items-center justify-center h-full">
+        <div className="animate-fade-in w-full flex flex-col items-center">
+          <div className="w-48 h-60 sm:w-56 sm:h-72 md:w-64 md:h-80 lg:w-72 lg:h-96 mx-auto mb-6 sm:mb-8 rounded-lg overflow-hidden border-2 border-silver-300/50 shadow-[0_0_15px_5px_rgba(192,192,192,0.3)] hover:shadow-[0_0_25px_10px_rgba(192,192,192,0.4)] transition-all duration-500 relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-silver-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 border-2 border-silver-300/30 rounded-lg group-hover:border-silver-300/70 transition-all duration-500"></div>
             <OptimizedImage
               src="/images/sasa-avatar.png"
               alt="Sasanka Hemakumara - Professional headshot"
-              width={224}
-              height={224}
+              width={288}
+              height={384}
               priority={true}
               useWebp={false}
               fallbackSrc="/images/sasa-avatar.png"
-              className="hover:scale-105 transition-transform duration-500"
-              sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, (max-width: 1024px) 192px, 224px"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 640px) 12rem, (max-width: 768px) 14rem, (max-width: 1024px) 16rem, 18rem"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/5 rounded-full"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
           
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 text-white tracking-tight leading-tight">
