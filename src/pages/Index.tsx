@@ -22,7 +22,7 @@ const Index = () => {
     <div className="min-h-screen w-full">
       <Suspense fallback={<MatrixFallback />}>
         <MatrixBackground 
-          density={0.35}
+          density={0.9}
           speed={1.2}
           colors={['#00ff41', '#00d4aa', '#0099cc', '#66ff66', '#00ffff']}
         >
